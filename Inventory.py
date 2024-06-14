@@ -64,8 +64,8 @@ class Inventory(Inventory):
 
     def __str__(self) -> str:
         for item in self.db:
-            print(item, self.db[item])
-        return "\n"
+            print(item, self.db[item], sep="\n")
+        return "\t"
 
     def __bool__(self) -> bool:
         for item in self.db:
@@ -88,12 +88,36 @@ class Inventory(Inventory):
         del self.db[Material_Type]
         return q
 
-    def Add(self, type, *values) ->  any:
-        a, b, c = values
-        self.db[type] += a, b, c
-        return self
+    def Update(self, mark: str, value: int | None = None, parametr: str | None = None, mat:Material = None) -> None:
+        match mat:
+            case None:
+                match parametr:
+                    case None:
+                        if mark == "Кредиты":
+                            self.db[mark] = value
+                        else:
+                            print("error")
+                    case "purple":
+                        self.db[mark].x = value
+                    case "blue":
+                        self.db[mark].y = value
+                    case "green":
+                        self.db[mark].z = value
+            case _:
+                self.db[mark] = mat
+        return None
 
-    def Sub(self, type, *values) -> any:
-        a, b, c = values
-        self.db[type] -= a, b, c
-        return self
+    def Reset(self, mark: str, parametr: str | None = None) -> None:
+        match parametr:
+            case None:
+                if mark == "Кредиты":
+                    self.db[mark] = 0
+                else:
+                    print("error")
+            case "purple":
+                self.db[mark].x = 0
+            case "blue":
+                self.db[mark].y = 0
+            case "green":
+                self.db[mark].z = 0
+        return None

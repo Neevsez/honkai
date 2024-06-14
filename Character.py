@@ -5,7 +5,8 @@ class Character(Character):
     def __doc__(self) -> str:
         return "Hello"
 
-    def __init__(self, name: str | None = None, path: str | None = None) -> None:
+    def __init__(self, type: str, name: str | None = None, path: str | None = None) -> None:
+        self.type = type
         match name:
             case None: self.name = ""
             case _: self.name = name
@@ -13,15 +14,16 @@ class Character(Character):
             case None: self.path = ""
             case _: self.path = path
         self.db = {
+            "Редкость": self.type,
             "Имя": self.name,
             "Путь": self.path,
             "Основные": {
                 "Обычная атака": 1,
                 "Навык": 1,
                 "Сверхспособность": 1, },
-            "Первая ветка": [0, 0, 0],
-            "Вторая ветка": [0, 0, 0],
-            "Третья ветка": [0, 0, 0, 0],
+            "Первая_ветка": [0, 0, 0],
+            "Вторая_ветка": [0, 0, 0],
+            "Третья_ветка": [0, 0, 0, 0],
         }
         return None
 
@@ -48,6 +50,8 @@ class Character(Character):
                     print("error")
             case _:
                 self.db[mark][parametr] = value
+        self.name = self.db["Имя"]
+        self.path = self.db["Путь"]
         return None
 
     def __delitem__(self, mark: str, parametr: str | int | None = None) -> None:
@@ -72,6 +76,6 @@ if __name__ == "__main__":
     a = Character()
     print(a)
     a.Change("Имя", "March 7")
-    print(a)
     a.Change("Путь", "Сохранение")
+    a.Change("Основные", 5, "Обычная атака")
     print(a)

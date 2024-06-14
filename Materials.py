@@ -24,8 +24,8 @@ class Material(Material):
         return a, b, c, o
 
 # constructor
-    def __init__(self, purple: int, blue: int, green: int, args: tuple = None):
-        if args is not None:
+    def __init__(self, purple: int = 0, blue: int = 0, green: int = 0, args: tuple = None):
+        if args != None:
             a, b, c, _ = self.__get_data(args)
             self.x = a
             self.y = b
@@ -43,9 +43,9 @@ class Material(Material):
 
     def __bool__(self):
         if (self.x + self.y + self.z == 0):
-            return 0
+            return False
         else:
-            return 1
+            return True
 
     def __int__(self): return len(self)
 
