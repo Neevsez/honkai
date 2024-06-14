@@ -1,7 +1,7 @@
-from Classes import __Material
+from Classes import Material
 
 
-class Material(__Material):
+class Material(Material):
     def __doc__(self):
         return "hello world"
 

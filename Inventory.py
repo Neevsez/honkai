@@ -1,21 +1,12 @@
 from Materials import Material
+from Classes import Inventory
 
-class Inventory:
-    def __str__(self):
-        for item in self.db:
-            print(item, self.db[item])
-        return "\n"
-    
-    def __bool__(self):
-        for item in self.db:
-            match bool(item):
-                case 0 | False | None:
-                    continue
-                case 1 | True:
-                    return True
-        return False
 
-    def __init__(self):
+class Inventory(Inventory):
+    def __doc__(self) -> str:
+        return "Hello"
+
+    def __init__(self) -> None:
         self.db = {
             "Кредиты": 0,
             # for heroes path
@@ -69,17 +60,40 @@ class Inventory:
             "Сломанные зубы Железного Волка": Material(0, 0, 0),
         }
 
-    def __del__(self): return bool(self)
+    def __del__(self) -> bool: return bool(self)
 
-    def __getitem__(self, Material_Type):
+    def __str__(self) -> str:
+        for item in self.db:
+            print(item, self.db[item])
+        return "\n"
+
+    def __bool__(self) -> bool:
+        for item in self.db:
+            match bool(item):
+                case 0 | False | None:
+                    continue
+                case 1 | True:
+                    return True
+        return False
+
+    def __getitem__(self, Material_Type) -> any:
         return self.db[Material_Type]
 
-    def Add(self, type, *values):
+    def __setitem__(self, Material_Type: str, index: int, value: int) -> None:
+        self.db[Material_Type][index] = value
+        return None
+
+    def __delitem__(self, Material_Type: str) -> Material:
+        q = self.db[Material_Type]
+        del self.db[Material_Type]
+        return q
+
+    def Add(self, type, *values) ->  any:
         a, b, c = values
         self.db[type] += a, b, c
         return self
 
-    def Sub(self, type, *values):
+    def Sub(self, type, *values) -> any:
         a, b, c = values
         self.db[type] -= a, b, c
         return self
